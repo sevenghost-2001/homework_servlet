@@ -17,23 +17,33 @@ public class AuthenticationFilter extends HttpFilter{
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 		//code chạy ở đây
-		Cookie[] cookie = req.getCookies();
-		String role = "";
+		Cookie[] cookies = req.getCookies();
+        boolean signedIn = false;
+        String role = "";
+        
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("sUserName")) {
+                    signedIn = true;
+                    System.out.println("Bạn vượt màn lọc log in thành công");
+                }
+                if (cookie.getName().equals("sRole")) {
+                    role = cookie.getValue();
+                }
+            }
+        }
+        if (signedIn) {
+            if (role.equals("ROLE_ADMIN")) {
+                System.out.println("Bạn là admin và có quyền truy cập của admin");
+                chain.doFilter(req, res);
+            } else {
+            	System.out.println("Bạn không có quyền truy cập của Admin");
+            	res.sendRedirect("login");
+            }
+        } else {
+            res.sendRedirect("login");
+        }
 		
-		for (Cookie cookie2 : cookie) {
-			String name = cookie2.getName();
-			String value = cookie2.getValue();
-			if(name.equals("sRole")) {
-				role = value;
-				System.out.println(role);
-			}
-		}	
-		if(role.equals("ROLE_ADMIN")) {
-			//Cho phép đi tiếp
-			chain.doFilter(req, res);
-		}else {
-			res.sendRedirect("login");
-		}
 		
 	}
 }
