@@ -20,6 +20,14 @@ public class UserService {
 		return userRepository.save(email, password, roleId, fullName, phone) > 0;
 	}
 	
+	public User findById(int id) {
+		return userRepository.findId(id);
+	}
+	
+	public void updateUser(String email,int id_role, int id) {
+		userRepository.update(email, id_role, id);
+	}
+	
 	public List<UserCreationRequest> findAllUserDTOs() {
 	    List<UserCreationRequest> dtos = new ArrayList<>();
 	    for (User user : userRepository.findAll()) {
@@ -32,5 +40,11 @@ public class UserService {
 	        dtos.add(dto);
 	    }
 	    return dtos;
+	}
+	public List<User>findAllUsers(){
+		return userRepository.findAll();
+	}
+	public void deleteById(int id) {
+		userRepository.deleteById(id);
 	}
 }

@@ -16,7 +16,6 @@ public class AuthenticationFilter extends HttpFilter{
 	@Override
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
-		//code chạy ở đây
 		Cookie[] cookies = req.getCookies();
         boolean signedIn = false;
         String role = "";

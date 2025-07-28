@@ -126,10 +126,10 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Danh sách thành viên</h4>
+                        <h4 class="page-title">Danh sách dự án</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                        <a href="user-add" class="btn btn-sm btn-success">Thêm mới</a>
+                        <a href="groupwork-add.jsp" class="btn btn-sm btn-success">Thêm mới</a>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -141,33 +141,27 @@
                                 <table class="table" id="example">
                                     <thead>
                                         <tr>
-                                            <!-- <th>STT</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                            <th>Role</th>
-                                            <th>#</th> -->
                                             <th>STT</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th>#</th>
+                                            <th>Tên Dự Án</th>
+                                            <th>Ngày Bắt Đầu</th>
+                                            <th>Ngày Kết Thúc</th>
+                                            <th>Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="item" items="${listUsers}" varStatus="loop">
-										    <c:if test="${item != null}">
-										        <tr>
-										           <td>${loop.index + 1}</td>
-											        <td>${item.email}</td>
-											        <td>${item.roles.name}</td>
-											        <td>
-		                                                <a href="user?action=edit&id=${item.id}" class="btn btn-sm btn-primary">Sửa</a>
-		                                                <a href="user?action=delete&id=${item.id}" class="btn btn-sm btn-danger">Xóa</a>
-		                                                <a href="userDetail?id=${item.id}" class="btn btn-sm btn-info">Xem</a>
-		                                            </td>   
-										        </tr>
-										    </c:if>
-										</c:forEach>
+                                    	<c:forEach var="item" items="${listProjects}" varStatus="loop">
+                                    		<tr>
+	                                            <td>${loop.index + 1}</td>
+	                                            <td>${item.name}</td>
+	                                            <td>${item.startDay}</td>
+	                                            <td>${item.endDay}</td>
+	                                            <td>
+	                                                <a href="project?action=edit&id=${item.id}" class="btn btn-sm btn-primary">Sửa</a>
+	                                                <a href="project?action=delete&id=${item.id}" class="btn btn-sm btn-danger">Xóa</a>
+	                                                <a href="groupwork-details.jsp" class="btn btn-sm btn-info">Xem</a>
+	                                            </td>
+                                        	</tr>
+                                    	</c:forEach>                        
                                     </tbody>
                                 </table>
                             </div>
@@ -190,7 +184,7 @@
     <script src="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
     <!--slimscroll JavaScript -->
     <script src="js/jquery.slimscroll.js"></script>
-    <script src="js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <!--Wave Effects -->
     <script src="js/waves.js"></script>
     <!-- Custom Theme JavaScript -->

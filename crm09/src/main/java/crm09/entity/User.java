@@ -2,6 +2,7 @@ package crm09.entity;
 
 public class User {
 	private int id;
+	private String fullName;
 	private String email;
 	private Role roles;
 	public int getId() {
@@ -21,6 +22,12 @@ public class User {
 	}
 	public void setRoles(Role roles) {
 		this.roles = roles;
+	}
+	public String getFullName() {
+		return fullName;
+	}
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 	
 	

@@ -89,7 +89,7 @@ public class LoginController extends HttpServlet{
 			if(listUsers.size() > 0) {
 				//Tạo cookie
 				Cookie cookie = new Cookie("sUserName",emailString);
-				cookie.setMaxAge(5*60);// tồn tại trong 5 giây
+//				cookie.setMaxAge(5*60);// tồn tại trong 5 giây
 				Cookie cookiePassword = new Cookie("sPassword",passwordString);
 				
 				String roleNameString = listUsers.get(0).getRoles().getName();
