@@ -44,6 +44,7 @@ public class UserRepository {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				user.setId(resultSet.getInt("id"));
+				user.setFullName(resultSet.getString("fullname"));
 				user.setEmail(resultSet.getString("email"));
 				Role role = new Role();
 				role.setName(resultSet.getString("name"));

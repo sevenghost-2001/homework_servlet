@@ -3,6 +3,7 @@ package crm09.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -40,7 +41,47 @@ private ProjectService projectService = new ProjectService();
 			int id = Integer.parseInt(req.getParameter("id"));
 			taskService.deleteById(id);
 			resp.sendRedirect("task");
-		}else {
+		}
+		else if ("detail".equals(action)) {
+			int userId = Integer.parseInt(req.getParameter("userId"));
+			User user = userService.findById(userId);
+			
+			List<Task> allTasks = taskService.getTasksByUser(user);
+			
+			List<Task> notStarted = new ArrayList<Task>();
+			List<Task> doing = new ArrayList<Task>();
+			List<Task> done = new ArrayList<Task>();
+			 
+			for (Task task : allTasks) {
+		        switch (task.getStatus()) {
+		            case "CHƯA BẮT ĐẦU":
+		                notStarted.add(task);
+		                break;
+		            case "ĐANG THỰC HIỆN":
+		                doing.add(task);
+		                break;
+		            case "HOÀN THÀNH":
+		                done.add(task);
+		                break;
+		        }
+		    }
+			
+			int total = allTasks.size();
+		    int notStartedPercent = (int)((double)notStarted.size() / total * 100);
+		    int doingPercent = (int)((double)doing.size() / total * 100);
+		    int donePercent = (int)((double)done.size() / total * 100);
+
+		    req.setAttribute("user", user);
+		    req.setAttribute("notStarted", notStarted);
+		    req.setAttribute("doing", doing);
+		    req.setAttribute("done", done);
+		    req.setAttribute("notStartedPercent", notStartedPercent);
+		    req.setAttribute("doingPercent", doingPercent);
+		    req.setAttribute("donePercent", donePercent);
+		    
+		    req.getRequestDispatcher("groupwork-details.jsp").forward(req, resp);
+		}
+		else {
 			List<Task> lisTasks = taskService.findAllTasks();
 			req.setAttribute("listTasks", lisTasks);
 			req.getRequestDispatcher("task.jsp").forward(req, resp);
@@ -59,7 +100,7 @@ private ProjectService projectService = new ProjectService();
 			LocalDate startTask =  LocalDate.parse(req.getParameter("start_task"),formatter);
 			LocalDate endTask = LocalDate.parse(req.getParameter("end_task"),formatter);
 //			String status = req.getParameter("status");
-			String status = "Đang thực hiện";
+			String status = "ĐANG THỰC HIỆN";
 			int id_project = Integer.parseInt(req.getParameter("id_project"));
 			int id_user = Integer.parseInt(req.getParameter("id_user"));
 			

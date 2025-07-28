@@ -164,7 +164,7 @@
 	                                            <td>
 	                                                <a href="task?action=edit&id=${item.id}" class="btn btn-sm btn-primary">Sửa</a>
 	                                                <a href="task?action=delete&id=${item.id}" class="btn btn-sm btn-danger">Xóa</a>
-	                                                <a href="groupwork-details.jsp" class="btn btn-sm btn-info">Xem</a>
+	                                                <a href="task?action=detail&userId=${item.user.id}" class="btn btn-sm btn-info">Xem</a>
 	                                            </td>
                                         	</tr>
                                     	</c:forEach>  

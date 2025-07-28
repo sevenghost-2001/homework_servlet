@@ -14,11 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import crm09.entity.Project;
 import crm09.entity.StatusProject;
+import crm09.entity.Task;
 import crm09.service.ProjectService;
+import crm09.service.TaskService;
 
 @WebServlet(name = "projectController", urlPatterns = {"/project"})
 public class ProjectController extends HttpServlet{
 	private ProjectService projectService = new ProjectService();
+	private TaskService taskService = new TaskService();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getParameter("action");
@@ -31,7 +34,14 @@ public class ProjectController extends HttpServlet{
 			int id = Integer.parseInt(req.getParameter("id"));
 			projectService.deleteById(id);
 			resp.sendRedirect("project");
-		}else {
+		}else if ("detail".equals(action)) {
+			int projectId = Integer.parseInt(req.getParameter("id"));
+			List<Task> listTasks = taskService.findByProjectId(projectId);
+			
+			req.setAttribute("listTasks", listTasks);
+		    req.getRequestDispatcher("groupwork-details.jsp").forward(req, resp);
+		}
+		else {
 			List<Project> listProjects = projectService.findAllProjects();
 			req.setAttribute("listProjects", listProjects);
 			req.getRequestDispatcher("groupwork.jsp").forward(req, resp);

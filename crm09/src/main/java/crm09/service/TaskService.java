@@ -32,5 +32,9 @@ public class TaskService {
 	public List<Task> getTasksByUser(User user){
 		return taskRepository.findByUser(user);
 	}
+	
+	public List<Task> findByProjectId(int projectId){
+		return taskRepository.findByProjectId(projectId);
+	}
 
 }

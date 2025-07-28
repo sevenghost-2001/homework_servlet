@@ -155,12 +155,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <h5 class="text-muted vb">CHƯA BẮT ĐẦU</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-danger">20%</h3>
+                                    <h3 class="counter text-right m-t-15 text-danger">${notStartedPercent}%</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-danger" role="progressbar"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: ${notStartedPercent}%">
                                         </div>
                                     </div>
                                 </div>
@@ -177,12 +177,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <h5 class="text-muted vb">ĐANG THỰC HIỆN</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-megna">50%</h3>
+                                    <h3 class="counter text-right m-t-15 text-megna">${doingPercent}%</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-megna" role="progressbar"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: ${doingPercent}%">
                                         </div>
                                     </div>
                                 </div>
@@ -199,12 +199,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <h5 class="text-muted vb">HOÀN THÀNH</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-primary">30%</h3>
+                                    <h3 class="counter text-right m-t-15 text-primary">${donePercent}%</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-primary" role="progressbar"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: ${donePercent}%">
                                         </div>
                                     </div>
                                 </div>
@@ -220,25 +220,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="col-xs-12">
                         <a href="#" class="group-title">
                             <img width="30" src="plugins/images/users/pawandeep.jpg" class="img-circle" />
-                            <span>Pavan kumar</span>
+                            <span>${user.fullName}</span>
                         </a>
                     </div>
                     <div class="col-md-4">
                         <div class="white-box">
                             <h3 class="box-title">Chưa thực hiện</h3>
                             <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
+                                <c:forEach var="task" items="${notStarted}">
+			                        <div class="mail-contnet">
+			                            <h5>${task.nameTask}</h5>
+			                            <span class="mail-desc">Bắt đầu: ${task.startTask}</span><br/>
+			                            <span class="mail-desc">Kết thúc: ${task.endTask}</span>
+			                        </div>
+			                        <hr/>
+			                    </c:forEach>
                             </div>
                         </div>
                     </div>
@@ -246,18 +242,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="white-box">
                             <h3 class="box-title">Đang thực hiện</h3>
                             <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
+                                <c:forEach var="task" items="${doing}">
+			                        <div class="mail-contnet">
+			                            <h5>${task.nameTask}</h5>
+			                            <span class="mail-desc">Bắt đầu: ${task.startTask}</span><br/>
+			                            <span class="mail-desc">Kết thúc: ${task.endTask}</span>
+			                        </div>
+			                        <hr/>
+			                    </c:forEach>
                             </div>
                         </div>
                     </div>
@@ -265,87 +257,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="white-box">
                             <h3 class="box-title">Đã hoàn thành</h3>
                             <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
+                                 <c:forEach var="task" items="${done}">
+			                        <div class="mail-contnet">
+			                            <h5>${task.nameTask}</h5>
+			                            <span class="mail-desc">Bắt đầu: ${task.startTask}</span><br/>
+			                            <span class="mail-desc">Kết thúc: ${task.endTask}</span>
+			                        </div>
+			                        <hr/>
+			                    </c:forEach>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <a href="#" class="group-title">
-                            <img width="30" src="plugins/images/users/pawandeep.jpg" class="img-circle" />
-                            <span>Pavan kumar</span>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Chưa thực hiện</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Đang thực hiện</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="white-box">
-                            <h3 class="box-title">Đã hoàn thành</h3>
-                            <div class="message-center">
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                            class="time">9:30 AM</span>
-                                    </div>
-                                </a>
-                                <a href="#">
-                                    <div class="mail-contnet">
-                                        <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                        <span class="time">9:10 AM</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <!-- END DANH SÁCH CÔNG VIỆC -->
             </div>
             <!-- /.container-fluid -->

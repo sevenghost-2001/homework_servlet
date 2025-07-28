@@ -84,34 +84,45 @@ public class TaskRepository {
 	}
 	
 	public List<Task> findAll(){
-		List<Task> listTasks = new ArrayList<Task>();
-		String query = "SELECT *\r\n"
-				+ "FROM tasks t\r\n"
-				+ "JOIN users u ON t.id_user = u.id\r\n"
-				+ "JOIN projects p ON t.id_project = p.id";
-		Connection connection = MysqlConfig.getConnection();
-		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				Task task = new Task();
-				task.setId(resultSet.getInt("id"));
-				task.setNameTask(resultSet.getString("name_task"));
-				task.setStartTask(resultSet.getDate("start_task").toLocalDate());
-				task.setEndTask(resultSet.getDate("end_task").toLocalDate());
-				task.setStatus(resultSet.getString("status"));
-				User user = new User();
-				user.setFullName(resultSet.getString("fullname"));
-				task.setUser(user);
-				Project project = new Project();
-				project.setName(resultSet.getString("name"));
-				task.setProject(project);
-				listTasks.add(task);
-			}
-		} catch (Exception e) {
-			System.out.println("Lỗi findAll: "+e.getLocalizedMessage());
-		}
-		return listTasks;
+		List<Task> listTasks = new ArrayList<>();
+	    String query = """
+	        SELECT 
+	            t.id AS task_id, t.name_task, t.start_task, t.end_task, t.status,
+	            u.id AS user_id, u.fullname AS user_fullname,
+	            p.id AS project_id, p.name AS project_name
+	        FROM tasks t
+	        JOIN users u ON t.id_user = u.id
+	        JOIN projects p ON t.id_project = p.id
+	        """;
+
+	    Connection connection = MysqlConfig.getConnection();
+	    try {
+	        PreparedStatement preparedStatement = connection.prepareStatement(query);
+	        ResultSet resultSet = preparedStatement.executeQuery();
+	        while (resultSet.next()) {
+	            Task task = new Task();
+	            task.setId(resultSet.getInt("task_id"));
+	            task.setNameTask(resultSet.getString("name_task"));
+	            task.setStartTask(resultSet.getDate("start_task").toLocalDate());
+	            task.setEndTask(resultSet.getDate("end_task").toLocalDate());
+	            task.setStatus(resultSet.getString("status"));
+
+	            User user = new User();
+	            user.setId(resultSet.getInt("user_id"));
+	            user.setFullName(resultSet.getString("user_fullname"));
+	            task.setUser(user);
+
+	            Project project = new Project();
+	            project.setId(resultSet.getInt("project_id"));
+	            project.setName(resultSet.getString("project_name"));
+	            task.setProject(project);
+
+	            listTasks.add(task);
+	        }
+	    } catch (Exception e) {
+	        System.out.println("Lỗi findAll: " + e.getLocalizedMessage());
+	    }
+	    return listTasks;
 	}
 	
 	public void deleteById(int id) {
@@ -163,5 +174,37 @@ public class TaskRepository {
 			System.out.println("Lỗi findByUser: " + e.getLocalizedMessage());
 		}
 		return tasks;
+	}
+	
+	public List<Task> findByProjectId(int projectId){
+		List<Task> listTasks = new ArrayList<>();
+	    String query = "SELECT t.*, u.fullname, p.name AS project_name FROM tasks t "
+	                 + "JOIN users u ON t.id_user = u.id "
+	                 + "JOIN projects p ON t.id_project = p.id "
+	                 + "WHERE p.id = ?";
+	    Connection conn = MysqlConfig.getConnection();
+	    try {
+	        PreparedStatement ps = conn.prepareStatement(query);
+	        ps.setInt(1, projectId);
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            Task task = new Task();
+	            task.setId(rs.getInt("id"));
+	            task.setNameTask(rs.getString("name_task"));
+	            task.setStartTask(rs.getDate("start_task").toLocalDate());
+	            task.setEndTask(rs.getDate("end_task").toLocalDate());
+	            task.setStatus(rs.getString("status"));
+	            User user = new User();
+	            user.setFullName(rs.getString("fullname"));
+	            task.setUser(user);
+	            Project project = new Project();
+	            project.setName(rs.getString("project_name"));
+	            task.setProject(project);
+	            listTasks.add(task);
+	        }
+	    } catch (Exception e) {
+	        System.out.println("Lỗi findByProjectId: " + e.getMessage());
+	    }
+	    return listTasks;
 	}
 }
